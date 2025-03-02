@@ -12,19 +12,19 @@ func nearestNeighboursScore(seats []int, people []int) int {
 	nns, numSeats := 0, len(seats)
 
 	for _, ppl := range people {
-		iseat, isFound := slices.BinarySearch(seats, ppl)
+		iSeat, isFound := slices.BinarySearch(seats, ppl)
 		if isFound {
 			continue
 		}
 
-		if iseat == numSeats { // index out of range, substitute with maximal seat
-			iseat -= 1
+		if iSeat == numSeats { // index out of range, substitute with maximal seat
+			iSeat -= 1
 		}
 
-		diff := math.Abs((float64)(ppl - seats[iseat]))
+		diff := math.Abs((float64)(ppl - seats[iSeat]))
 
-		if iseat != 0 { // choose between selected and earlier seats
-			diff = math.Min(diff, math.Abs((float64)(ppl-seats[iseat-1])))
+		if iSeat != 0 { // choose between selected and earlier seats
+			diff = math.Min(diff, math.Abs((float64)(ppl-seats[iSeat-1])))
 		}
 
 		nns += (int)(diff)
