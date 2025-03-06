@@ -4,29 +4,31 @@ import (
 	"fmt"
 )
 
-func fibo(a, b, n int) <-chan int {
+func fibo(n int) <-chan int {
 	out := make(chan int)
-	go func(a, b, n int) {
+	if n < 3 {
+		panic("wrong sequence length")
+	}
+	go func(n int) {
+		a, b := 0, 1
 		out <- a
 		out <- b
-		for i := 0; i < n; i++ {
+		for range n - 2 {
 			a, b = b, a+b
 			out <- b
 		}
 		close(out)
-	}(a, b, n)
+	}(n)
 	return out
 }
 
 func main() {
-	ch := fibo(0, 1, 5)
-	fmt.Print(<-ch)
-
-	for n := range ch {
-		fmt.Print(" ", n)
+	ch := fibo(5)
+	for range 5 {
+		fmt.Println(<-ch)
 	}
-	fmt.Print("\n")
 
-	ch = fibo(10, 11, 3)
-	fmt.Println(<-ch, <-ch, <-ch, <-ch, <-ch)
+	for n := range fibo(10) {
+		fmt.Println(n)
+	}
 }
