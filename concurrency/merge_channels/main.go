@@ -10,6 +10,8 @@ func merge(channels ...<-chan int) <-chan int { // aka 'Fan-in'
 
 	wg := sync.WaitGroup{}
 
+	wg.Add(len(channels))
+
 	for _, ch := range channels {
 		go func() {
 			defer wg.Done()
@@ -18,8 +20,6 @@ func merge(channels ...<-chan int) <-chan int { // aka 'Fan-in'
 			}
 		}()
 	}
-
-	wg.Add(len(channels))
 
 	go func() {
 		wg.Wait()
