@@ -12,9 +12,7 @@ func main() {
 		return b
 	}
 
-	fmt.Println("a =", a, "b =", b)
-	fmt.Println(a, b, fibo(), fibo(), fibo(), a, b)
-	fmt.Println("a =", a, "b =", b)
+	fmt.Println("fubo: ", fibo(), fibo(), fibo(), fibo(), fibo())
 
 	fibo2 := func(a, b int) int { // anonymous function
 		a, b = b, a+b
